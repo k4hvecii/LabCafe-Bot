@@ -1,6 +1,6 @@
 # LabCafe
 
-Discord server management bot and web dashboard, built with TypeScript, discord.js and Node.js. Early development; preparing the first open-source release. No project license has been selected yet. This private preparation is not an open-source release.
+Discord server management bot and web dashboard, built with TypeScript, discord.js and Node.js. LabCafe is developed with assistance from ChatGPT and OpenAI Codex. Its primary maintainer directs product decisions, sets requirements and manages releases. Early development; preparing the first open-source release. No project license has been selected yet. This private preparation is not an open-source release.
 
 ## Implemented
 
