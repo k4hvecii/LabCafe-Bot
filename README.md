@@ -1,6 +1,6 @@
 # LabCafe
 
-Discord server management bot and web dashboard, built with TypeScript, discord.js and Node.js. LabCafe is developed with assistance from ChatGPT and OpenAI Codex. Its primary maintainer directs product decisions, sets requirements and manages releases. Early development; preparing the first open-source release. No project license has been selected yet. This private preparation is not an open-source release.
+Discord server management bot and web dashboard, built with TypeScript, discord.js and Node.js. LabCafe is developed with assistance from ChatGPT and OpenAI Codex. Its primary maintainer directs product decisions, sets requirements and manages releases. Early development; preparing the first open-source release. Project-owned code is licensed under MIT. This repository remains Private pending separate publication approval.
 
 ## Implemented
 
@@ -43,8 +43,16 @@ Both services must use the same settings path when sharing preferences. Do not r
 
 Tests use Node's test runner and tsx. The independent help replacement passes 153 local tests in the complete suite; its remote CI is tracked separately. They cover permissions, settings, OAuth/session handling, metrics, analytics, and dashboard routes. Windows and Ubuntu CI run against this clean repository; consult its Actions results for the current commit. Tests are not proof of every live Discord interaction.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), and [LICENSE-PROPOSAL.md](LICENSE-PROPOSAL.md). Third-party notices remain under `dashboard/`; package license metadata is listed in `THIRD-PARTY-INVENTORY.json`. Original brand artwork and reference assets are excluded; see ASSETS.md. The project name and third-party trademarks are not licensed by a future code license.
+See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), and [LICENSE](LICENSE). Third-party notices remain under `dashboard/`; package license metadata is listed in `THIRD-PARTY-INVENTORY.json`. Original brand artwork and reference assets are excluded; see ASSETS.md. The code license does not grant separate trademark rights.
 
 ## Publication history
 
-This repository starts with a new root commit from the reviewed clean source package. No earlier Git history was imported. The former repository is retained separately as a private archive. Keep this repository Private until license and publication approvals are complete.
+This repository starts with a new root commit from the reviewed clean source package. No earlier Git history was imported. The former repository is retained separately as a private archive. Keep this repository Private until separate publication approval is complete.
+
+## License
+
+Project-owned source code and documentation are available under the [MIT License](LICENSE).
+
+Copyright (c) 2026 LabCafe
+
+“LabCafe” is the approved project/brand designation in this notice, not an assertion that an incorporated legal entity exists. Private brand artwork is excluded; the code license does not grant separate trademark rights or imply endorsement. Third-party materials retain their own licenses and notices. See [ASSETS.md](ASSETS.md).
