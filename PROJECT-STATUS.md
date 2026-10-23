@@ -11,3 +11,5 @@ Verification on Windows: 153/153 tests, TypeScript check and build pass. These i
 Advanced AI analysis, generalized bulk Discord changes and payments are not released features. Original brand assets and references are excluded; the approved MIT code grant remains separate from brand rights and third-party terms. See ASSETS.md and LICENSE. Keep this repository Private until explicitly approved otherwise.
 
 The former help renderer and serialized legacy fixture were independently replaced before this repository was created. The old archive and its commit graph are not part of this repository.
+
+Automated tests and Windows/Linux CI pass. End-to-end testing against a live Discord test application and server is still pending.
