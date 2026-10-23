@@ -20,7 +20,11 @@
     "commands:register": "tsx src/cli/register.ts",
     "style:preview": "tsx src/cli/name-style.ts preview",
     "style:apply": "tsx src/cli/name-style.ts apply",
-    "style:reset": "tsx src/cli/name-style.ts reset"
+    "style:reset": "tsx src/cli/name-style.ts reset",
+    "release:check": "node scripts/release/manage.mjs check",
+    "release:prepare": "node scripts/release/manage.mjs prepare",
+    "release:notes": "node scripts/release/manage.mjs notes",
+    "notifications:preview": "node scripts/release/notify.mjs preview"
   },
   "dependencies": {
     "discord.js": "^14.27.0",
