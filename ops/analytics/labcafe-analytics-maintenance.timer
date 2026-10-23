@@ -1,0 +1,8 @@
+[Unit]
+Description=Daily LabCafe analytics backup
+[Timer]
+OnCalendar=*-*-* 04:15:00 Europe/Istanbul
+Persistent=true
+RandomizedDelaySec=300
+[Install]
+WantedBy=timers.target

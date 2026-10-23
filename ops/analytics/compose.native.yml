@@ -1,0 +1,25 @@
+services:
+  native:
+    image: ${NATIVE_IMAGE:-labcafe-umami-native:3.4.0}
+    ports: ['127.0.0.1:3011:3000']
+    environment:
+      DATABASE_URL: postgresql://labcafe_analytics:${POSTGRES_PASSWORD}@db:5432/labcafe_analytics
+      APP_SECRET: ${APP_SECRET}
+      TWO_FACTOR_ENCRYPTION_KEY: ${TWO_FACTOR_ENCRYPTION_KEY}
+      BASE_PATH: /admin/analytics
+      DISABLE_TELEMETRY: '1'
+      DISABLE_UPDATES: '1'
+    restart: unless-stopped
+    init: true
+    mem_limit: 640m
+    cpus: 0.75
+    security_opt: [no-new-privileges:true]
+    logging:
+      driver: json-file
+      options: {max-size: 10m, max-file: '3'}
+    healthcheck:
+      test: [CMD-SHELL, 'curl --fail http://localhost:3000/admin/analytics/api/heartbeat']
+      interval: 20s
+      timeout: 5s
+      retries: 12
+      start_period: 60s

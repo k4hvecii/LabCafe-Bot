@@ -1,0 +1,49 @@
+name: labcafe-analytics
+services:
+  db:
+    image: postgres@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
+    environment:
+      POSTGRES_DB: labcafe_analytics
+      POSTGRES_USER: labcafe_analytics
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - analytics-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    mem_limit: 384m
+    cpus: 0.5
+    security_opt: [no-new-privileges:true]
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U labcafe_analytics -d labcafe_analytics']
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    logging:
+      driver: json-file
+      options: {max-size: 10m, max-file: '3'}
+  umami:
+    image: ghcr.io/umami-software/umami@sha256:85909afc45bdcda1917394594a087421fdbb05610fded0fa9f6fb861abb2f367
+    ports: ['127.0.0.1:3010:3000']
+    environment:
+      DATABASE_URL: postgresql://labcafe_analytics:${POSTGRES_PASSWORD}@db:5432/labcafe_analytics
+      APP_SECRET: ${APP_SECRET}
+      TWO_FACTOR_ENCRYPTION_KEY: ${TWO_FACTOR_ENCRYPTION_KEY}
+      DISABLE_TELEMETRY: '1'
+      TRACKER_SCRIPT_NAME: script.js
+    depends_on:
+      db: {condition: service_healthy}
+    restart: unless-stopped
+    init: true
+    mem_limit: 768m
+    cpus: 0.75
+    security_opt: [no-new-privileges:true]
+    healthcheck:
+      test: [CMD-SHELL, 'curl --fail http://localhost:3000/api/heartbeat']
+      interval: 20s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
+    logging:
+      driver: json-file
+      options: {max-size: 10m, max-file: '3'}
+volumes:
+  analytics-data:

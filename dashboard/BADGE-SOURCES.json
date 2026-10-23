@@ -1,0 +1,18 @@
+{
+  "verified": {
+    "url": "https://raw.githubusercontent.com/Fmasterpro27/Discord-badges/main/assets/server_badge/Verified.svg",
+    "sha256": "daf4f9ece640097a4c5d61209699b8fc0a45261c1b1b102e24fb934f0f85046b"
+  },
+  "partnered": {
+    "url": "https://raw.githubusercontent.com/Fmasterpro27/Discord-badges/main/assets/server_badge/Partnered.svg",
+    "sha256": "90e45f30308d1d64c1896458b1b4c433185c20f76be885de34dc3085049686d6"
+  },
+  "community": {
+    "url": "https://raw.githubusercontent.com/Fmasterpro27/Discord-badges/main/assets/server_badge/CommunityLight.svg",
+    "sha256": "888b5eb234fbc50469e45a7e60dc7dd98f9a0f76fb097772014b7ee1a8bca4ba"
+  },
+  "appTag": {
+    "url": "https://raw.githubusercontent.com/Fmasterpro27/Discord-badges/main/assets/discord_flags/VerifiedApp.svg",
+    "sha256": "075404df403f988c60ca9149d3f1c7e6cde54f5abd6e0f5aeef257042c1cc368"
+  }
+}

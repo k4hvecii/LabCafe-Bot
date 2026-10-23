@@ -1,0 +1,38 @@
+[Unit]
+Description=LabCafe Discord Bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=labcafe
+Group=labcafe
+WorkingDirectory=/opt/labcafe
+EnvironmentFile=/etc/labcafe/bot.env
+Environment=NODE_ENV=production
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+Environment=LABCAFE_SETTINGS_PATH=/var/lib/labcafe/settings.sqlite
+StateDirectory=labcafe
+StateDirectoryMode=0700
+ExecStart=/opt/labcafe-runtime/node /opt/labcafe/dist/index.js
+Restart=on-failure
+RestartSec=5
+MemoryMax=512M
+TasksMax=128
+OOMPolicy=stop
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=labcafe-bot
+TimeoutStopSec=15
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

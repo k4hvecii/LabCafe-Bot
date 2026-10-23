@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#16171c">
+  <meta name="description" content="Discord ile giriş yap, yönetebildiğin sunucuyu seç ve LabCafe ayarlarını kontrol et.">
+  <meta name="discord-client-id" content="100000000000000002">
+  <link rel="canonical" href="https://labcafe.xyz/features/dashboard">
+  <meta property="og:title" content="LabCafe — Yönetim Paneli">
+  <meta property="og:description" content="Discord ile giriş yap, yönetebildiğin sunucuyu seç ve LabCafe ayarlarını kontrol et.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://labcafe.xyz/features/dashboard">
+  <meta name="twitter:card" content="summary">
+  <title>LabCafe — Yönetim Paneli</title>
+  <link rel="icon" type="image/svg+xml" href="/logo.svg">
+  <link rel="preload" href="/manrope-regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="/manrope-bold.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/analytics-client.js" defer></script>
+  <script src="/i18n.js" defer></script>
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div id="app"><a class="skip-link" href="#main-content">Ana içeriğe git</a><header class="site-header"><div class="header-left"><a href="/" aria-label="LabCafe ana sayfa"><span class="brand"><img class="labcafe-logo" src="/logo.svg" alt="" width="36" height="40"><span>LabCafe</span><span class="beta-tag" aria-label="Beta sürümü">BETA</span></span></a><nav class="desktop-nav" aria-label="Ana menü"><div class="nav-group"><button class="nav-trigger" data-nav-toggle aria-expanded="false" aria-controls="desktop-features">Özellikler<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="m6 9 6 6 6-6" />
+</svg>
+</button><div class="nav-panel" id="desktop-features" hidden><div class="nav-main"><p class="nav-caption">Özellikler</p><div class="nav-card-grid"><a class="nav-card" href="/features/dashboard"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="M4 5h16" />
+  <path d="M4 12h16" />
+  <path d="M4 19h16" />
+</svg>
+<span><strong>Yönetim Paneli</strong><small>Sunucunu seç, ayarlarını yönet.</small></span></a><a class="nav-card" href="/features/server-checks"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+  <path d="m9 12 2 2 4-4" />
+</svg>
+<span><strong>Sunucu Kontrolleri</strong><small>Kanal, rol ve izin kontrollerini incele.</small></span></a><a class="nav-card" href="/features/commands"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="M12 19h8" />
+  <path d="m4 17 6-6-6-6" />
+</svg>
+<span><strong>Bot Komutları</strong><small>Sunucunu seçerek komutlarını düzenle.</small></span></a></div></div><aside class="nav-start"><a href="/dashboard" class="nav-start-link">Yönetim panelini aç <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</a></aside></div></div><div class="nav-group"><button class="nav-trigger" data-nav-toggle aria-expanded="false" aria-controls="desktop-resources">Kaynaklar<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="m6 9 6 6 6-6" />
+</svg>
+</button><div class="nav-panel" id="desktop-resources" hidden><div class="nav-main"><p class="nav-caption">Kaynaklar</p><div class="nav-card-grid"><a class="nav-card" href="/terms-of-service"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="M20 6 9 17l-5-5" />
+</svg>
+<span><strong>Hizmet Koşulları</strong><small>LabCafe kullanım koşulları.</small></span></a><a class="nav-card" href="/privacy-policy"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+  <path d="m9 12 2 2 4-4" />
+</svg>
+<span><strong>Gizlilik Politikası</strong><small>Verilerini nasıl işlediğimizi öğren.</small></span></a><a class="nav-card" href="/data-deletion"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+  <path d="M21 3v5h-5" />
+  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+  <path d="M8 16H3v5" />
+</svg>
+<span><strong>Veri Silme</strong><small>Kayıtlarının silinmesini talep et.</small></span></a></div></div><aside class="nav-start"><a href="/privacy-policy" class="nav-start-link">Gizlilik politikasını oku <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</a></aside></div></div><a class="support-nav" data-support href="https://discord.gg/YOUR_SUPPORT_INVITE"><span>Destek</span></a></nav></div><div class="header-right"><div class="language-control"><button class="language-button" data-language-toggle aria-label="Dil seç" aria-expanded="false" aria-controls="language-menu"><span data-language-current><span data-current-flag="tr"><span class="language-flag" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect width="24" height="24" fill="#e5303e"/><circle cx="10" cy="12" r="6" fill="#fff"/><circle cx="12" cy="11" r="5" fill="#e5303e"/><path d="m17 8 1 2.7 2.9.1-2.3 1.8.8 2.8-2.4-1.6-2.4 1.6.8-2.8-2.3-1.8 2.9-.1Z" fill="#fff"/></svg></span></span><span data-current-flag="en" hidden><span class="language-flag" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect width="24" height="24" fill="#fff"/><path d="M0 1.5H24M0 5.2H24M0 8.9H24M0 12.6H24M0 16.3H24M0 20H24M0 23.7H24" stroke="#c73c4b" stroke-width="1.9"/><rect width="13" height="13" fill="#344777"/><path d="M3 3h1M7 3h1M11 3h1M3 7h1M7 7h1M11 7h1M3 11h1M7 11h1M11 11h1" stroke="#fff" stroke-width="1.3"/></svg></span></span></span></button><div class="language-menu" id="language-menu" hidden><button data-language="tr" lang="tr"><span class="language-flag" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect width="24" height="24" fill="#e5303e"/><circle cx="10" cy="12" r="6" fill="#fff"/><circle cx="12" cy="11" r="5" fill="#e5303e"/><path d="m17 8 1 2.7 2.9.1-2.3 1.8.8 2.8-2.4-1.6-2.4 1.6.8-2.8-2.3-1.8 2.9-.1Z" fill="#fff"/></svg></span><span class="language-name">Türkçe</span><span class="language-check" data-language-check="tr"></span></button><button data-language="en" lang="en"><span class="language-flag" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect width="24" height="24" fill="#fff"/><path d="M0 1.5H24M0 5.2H24M0 8.9H24M0 12.6H24M0 16.3H24M0 20H24M0 23.7H24" stroke="#c73c4b" stroke-width="1.9"/><rect width="13" height="13" fill="#344777"/><path d="M3 3h1M7 3h1M11 3h1M3 7h1M7 7h1M11 7h1M3 11h1M7 11h1M11 11h1" stroke="#fff" stroke-width="1.3"/></svg></span><span class="language-name">English</span><span class="language-check" data-language-check="en"></span></button></div></div><a class="button login-button" href="/auth/login" aria-label="Discord ile Giriş Yap"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon icon-brand" aria-hidden="true" focusable="false"><title>Discord</title><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg><span class="login-label">Discord ile Giriş Yap</span></a><button class="icon-button mobile-menu" id="mobile-menu" aria-label="Menüyü aç" aria-expanded="false" aria-controls="header-dropdown"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="M4 5h16" />
+  <path d="M4 12h16" />
+  <path d="M4 19h16" />
+</svg>
+</button></div></header>
+  
+  <nav class="header-dropdown" id="header-dropdown" aria-label="Gezinme menüsü" hidden><div class="nav-group"><button class="nav-trigger" data-nav-toggle aria-expanded="false" aria-controls="mobile-features">Özellikler<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="m6 9 6 6 6-6" />
+</svg>
+</button><div class="nav-panel" id="mobile-features" hidden><div class="nav-main"><p class="nav-caption">Özellikler</p><div class="nav-card-grid"><a class="nav-card" href="/features/dashboard"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="M4 5h16" />
+  <path d="M4 12h16" />
+  <path d="M4 19h16" />
+</svg>
+<span><strong>Yönetim Paneli</strong><small>Sunucunu seç, ayarlarını yönet.</small></span></a><a class="nav-card" href="/features/server-checks"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+  <path d="m9 12 2 2 4-4" />
+</svg>
+<span><strong>Sunucu Kontrolleri</strong><small>Kanal, rol ve izin kontrollerini incele.</small></span></a><a class="nav-card" href="/features/commands"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="M12 19h8" />
+  <path d="m4 17 6-6-6-6" />
+</svg>
+<span><strong>Bot Komutları</strong><small>Sunucunu seçerek komutlarını düzenle.</small></span></a></div></div><aside class="nav-start"><a href="/dashboard" class="nav-start-link">Yönetim panelini aç <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</a></aside></div></div><div class="nav-group"><button class="nav-trigger" data-nav-toggle aria-expanded="false" aria-controls="mobile-resources">Kaynaklar<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="m6 9 6 6 6-6" />
+</svg>
+</button><div class="nav-panel" id="mobile-resources" hidden><div class="nav-main"><p class="nav-caption">Kaynaklar</p><div class="nav-card-grid"><a class="nav-card" href="/terms-of-service"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="M20 6 9 17l-5-5" />
+</svg>
+<span><strong>Hizmet Koşulları</strong><small>LabCafe kullanım koşulları.</small></span></a><a class="nav-card" href="/privacy-policy"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+  <path d="m9 12 2 2 4-4" />
+</svg>
+<span><strong>Gizlilik Politikası</strong><small>Verilerini nasıl işlediğimizi öğren.</small></span></a><a class="nav-card" href="/data-deletion"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+  <path d="M21 3v5h-5" />
+  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+  <path d="M8 16H3v5" />
+</svg>
+<span><strong>Veri Silme</strong><small>Kayıtlarının silinmesini talep et.</small></span></a></div></div><aside class="nav-start"><a href="/privacy-policy" class="nav-start-link">Gizlilik politikasını oku <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</a></aside></div></div><a class="support-nav" data-support href="https://discord.gg/YOUR_SUPPORT_INVITE"><span>Destek</span></a></nav><main id="main-content" class="feature-page"><a class="feature-back" href="/">← Ana Sayfa</a><section class="feature-hero"><div><h1>Sunucunun ayarları, tek bir yerde.</h1><p>Discord ile giriş yap, yönetebildiğin sunucuyu seç ve LabCafe ayarlarını kontrol et.</p><div class="landing-actions"><a class="button primary" href="/dashboard">Yönetim Panelini Aç</a><a class="button" href="https://discord.com/oauth2/authorize?client_id=100000000000000002&scope=bot+applications.commands&permissions=19456" target="_blank" rel="noopener noreferrer"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon icon-brand" aria-hidden="true" focusable="false"><title>Discord</title><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg> LabCafe’yi Ekle</a></div></div><div class="feature-illustration"></div></section><section class="feature-explanations" aria-label="Özellik detayları"><article><span>01</span><h2>Sunucunu seç</h2><p>Sunucu sahibi veya Sunucuyu Yönet yetkisine sahip olduğun sunucuları gör. Botun ekli olduğu sunucular önce listelenir.</p></article><article><span>02</span><h2>İncele ve onayla</h2><p>Yanıt görünürlüğünü, komut kanalını ve bot dilini düzenle. Kaydetmeden önce değişikliklerini inceleyip onayla.</p></article><article><span>03</span><h2>Geçmişini takip et</h2><p>Ayar değişikliklerini, tarihini ve işlemi yapan hesabı gör.</p></article></section><p class="feature-scope"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+<span>Dashboard ve Discord’daki /ayarlar komutu aynı sunucu ayarlarını kullanır.</span></p><nav class="feature-related" aria-label="Diğer özellikler"><a href="/features/server-checks">Sunucu Kontrolleri <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</a><a href="/features/commands">Bot Komutları <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</a></nav></main><footer class="site-footer"><div class="footer-coffee" aria-hidden="true"><svg class="coffee-surface" viewBox="0 0 1440 160" preserveAspectRatio="none"><defs><linearGradient id="coffee-depth" gradientUnits="userSpaceOnUse" x1="0" y1="55" x2="0" y2="140"><stop offset="0" stop-color="#5c4030"/><stop offset="1" stop-color="#2b211c"/></linearGradient></defs><g class="coffee-flow"><path class="coffee-back" d="M-80 84C110 115 215 16 442 53S777 121 981 66S1268 25 1520 71V180H-80Z"/><path class="coffee-milk" d="M-80 91C125 116 260 30 469 60S779 129 998 76S1310 37 1520 80L1520 100C1305 57 1220 66 1008 96S682 125 477 81S121 138-80 112Z"/><path class="coffee-middle" d="M-80 101C127 125 278 42 474 72S785 139 1005 88S1322 51 1520 92V180H-80Z"/><path class="coffee-ribbon" d="M-80 108C143 134 288 52 489 83S795 143 1018 98S1318 66 1520 103L1520 120C1320 83 1233 86 1025 115S694 143 494 101S145 152-80 126Z"/><path class="coffee-front" d="M-80 119C147 135 279 64 493 94S797 149 1022 109S1315 77 1520 113V180H-80Z"/><path class="coffee-crema" d="M86 118C238 99 324 78 446 88M1027 108C1143 87 1240 85 1324 94"/></g></svg></div><div class="footer-content"><a href="/" aria-label="LabCafe"><img class="labcafe-logo" src="/logo.svg" alt="" width="36" height="40"><strong>LabCafe</strong></a><nav class="footer-links" aria-label="Yasal bilgiler"><a href="/terms-of-service">Hizmet Koşulları</a><a href="/privacy-policy">Gizlilik Politikası</a><a href="/data-deletion">Veri Silme</a></nav><p>LabCafe · Discord ile bağlantılı bağımsız bir bot.</p></div></footer><dialog id="reset-dialog" aria-labelledby="reset-title"><h2 id="reset-title">Ayarlar sıfırlansın mı?</h2><p>Bu sunucuda gizli yanıtlar açılır, komut kanalı kısıtlaması kaldırılır ve bot dili Türkçeye döner.</p><div class="dialog-actions"><button class="button" data-close="reset-dialog">Vazgeç</button><button class="button danger" id="confirm-reset">Sıfırla</button></div></dialog><dialog id="support-dialog" aria-labelledby="support-title"><h2 id="support-title">LabCafe Destek</h2><p>Kurulum ve ayarlar için destek al.</p><a class="button" href="https://discord.gg/YOUR_SUPPORT_INVITE" target="_blank" rel="noopener noreferrer">Sunucuya Katıl</a><div class="dialog-actions"><button class="button" data-close="support-dialog">Kapat</button></div></dialog><dialog class="login-dialog" id="login-dialog" aria-labelledby="login-dialog-title"><button class="login-dialog-close icon-button" data-close="login-dialog" aria-label="Kapat"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ class="icon" aria-hidden="true" focusable="false">
+  <path d="M18 6 6 18" />
+  <path d="m6 6 12 12" />
+</svg>
+</button><h2 id="login-dialog-title">Discord ile Giriş Yap</h2><div id="login-support-guild"><div class="login-server-card"><img class="labcafe-logo" src="/logo.svg" alt="" width="36" height="40"><div class="login-server-copy"><strong><span>LabCafe</span></strong><p>Discord sunucumuza katılmak ister misin?</p></div></div></div><div class="dialog-actions"><a class="button" href="/auth/login" data-login-direct>Hayır, yalnızca giriş yap</a><button class="button" id="login-join">Evet, lütfen</button></div></dialog><dialog id="save-confirm" aria-labelledby="save-confirm-title"><h2 id="save-confirm-title">Değişiklikleri incele</h2><div id="save-diff"></div><p>Yalnızca bu sunucunun bot ayarları güncellenecek. Kanal veya rol oluşturulmaz.</p><div class="dialog-actions"><button class="button" data-close="save-confirm">Vazgeç</button><button class="button primary" id="confirm-save">Onayla ve Kaydet</button></div></dialog></div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

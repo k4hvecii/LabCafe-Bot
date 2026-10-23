@@ -1,0 +1,12 @@
+# http{} context only. Do not include inside server{}.
+# Query strings, referrers, User-Agent and Authorization are intentionally absent.
+log_format labcafe_queryless escape=json
+  '{"time":"$time_iso8601","method":"$request_method","uri":"$uri","status":$status,"bytes":$body_bytes_sent,"duration":$request_time}';
+# In the existing LabCafe server{} replace ALL inherited/explicit access_log directives:
+# access_log /var/log/nginx/labcafe-access.log labcafe_queryless;
+# OAuth error_log can also contain request query details on upstream failures.
+# Prefer location-specific `error_log /dev/null crit;` for /auth/login,
+# /auth/install and /auth/callback ONLY after reviewing location precedence and
+# preserving their existing proxy configuration. Use application safe event codes.
+# Do not delete existing logs as part of deployment. Review restricted retention
+# independently; this file cannot remove previously recorded information.

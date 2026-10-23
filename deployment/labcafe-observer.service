@@ -1,0 +1,31 @@
+[Unit]
+Description=LabCafe read-only host observer
+After=network.target
+
+[Service]
+Type=simple
+User=labcafe
+Group=labcafe
+WorkingDirectory=/opt/labcafe
+EnvironmentFile=/etc/labcafe/observer.env
+Environment=NODE_ENV=production
+ExecStart=/opt/labcafe-runtime/node /opt/labcafe/dist/cli/observer.js
+Restart=on-failure
+RestartSec=5
+MemoryMax=128M
+TasksMax=32
+TimeoutStopSec=10
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+UMask=0077
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

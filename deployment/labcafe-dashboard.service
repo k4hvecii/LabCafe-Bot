@@ -1,0 +1,40 @@
+[Unit]
+Description=LabCafe Web Dashboard
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=labcafe
+Group=labcafe
+WorkingDirectory=/opt/labcafe
+EnvironmentFile=/etc/labcafe/dashboard.env
+Environment=NODE_ENV=production
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+Environment=LABCAFE_SETTINGS_PATH=/var/lib/labcafe/settings.sqlite
+Environment=DASHBOARD_HOST=127.0.0.1
+Environment=DASHBOARD_PORT=3000
+StateDirectory=labcafe
+StateDirectoryMode=0700
+ExecStart=/opt/labcafe-runtime/node /opt/labcafe/dist/cli/dashboard.js
+Restart=on-failure
+RestartSec=5
+MemoryMax=512M
+TasksMax=128
+OOMPolicy=stop
+TimeoutStopSec=15
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=labcafe-dashboard
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

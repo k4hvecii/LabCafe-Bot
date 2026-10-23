@@ -1,0 +1,9 @@
+[Unit]
+Description=LabCafe analytics backup and retention
+After=docker.service
+Requires=docker.service
+[Service]
+Type=oneshot
+ExecStart=/opt/labcafe-analytics/maintenance.sh
+TimeoutStartSec=120
+Nice=10
