@@ -139,11 +139,12 @@ export class GuildSettingsStore {
     } catch (error) { this.db.exec('ROLLBACK'); throw error; }
   }
 
-  reset(guildId: string, actorId?: string): GuildSettings {
+  reset(guildId: string, actorId?: string, expected?: GuildSettings): GuildSettings {
     if (!isSnowflake(guildId)) throw new Error('Geçersiz sunucu ID.');
     this.db.exec('BEGIN IMMEDIATE');
     try {
       const previous = this.get(guildId);
+      if (expected && JSON.stringify(expected) !== JSON.stringify(previous)) throw new Error('SETTINGS_CONFLICT');
       this.db.prepare('DELETE FROM guild_settings WHERE guild_id = ?').run(guildId);
       if (actorId) {
         if (!isSnowflake(actorId)) throw new Error('Geçersiz kullanıcı.');

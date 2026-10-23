@@ -1,3 +1,4 @@
+import {settingsPanelCommands} from '../settings-panel/prototype.js';
 import 'dotenv/config';
 import { REST, Routes } from 'discord.js';
 import { readConfig } from '../config/env.js';
@@ -6,7 +7,7 @@ import { safeErrorName } from '../core/logger.js';
 
 async function main() {
   const config = readConfig(process.env);
-  const commands = await loadCommands();
+  const commands = settingsPanelCommands(await loadCommands(),config);
   const rest = new REST({ version: '10' }).setToken(config.token);
   const route = config.guildId
     ? Routes.applicationGuildCommands(config.clientId, config.guildId)
