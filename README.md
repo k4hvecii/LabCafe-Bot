@@ -45,6 +45,10 @@ Tests use Node's test runner and tsx. The independent help replacement passes 15
 
 See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), and [LICENSE](LICENSE). Third-party notices remain under `dashboard/`; package license metadata is listed in `THIRD-PARTY-INVENTORY.json`. Original brand artwork and reference assets are excluded; see ASSETS.md. The code license does not grant separate trademark rights.
 
+## Release tooling
+
+Version validation, reviewed release-note drafts, safe Discord notifications and real GitHub diff previews are documented in [RELEASES.md](RELEASES.md). The inherited package version is not a published Stable release. Notifications do not publish or deploy the bot.
+
 ## Publication history
 
 This repository starts with a new root commit from the reviewed clean source package. No earlier Git history was imported. The former repository is retained separately as a private archive. Publication was explicitly approved by the maintainer; the private archive remains separate.

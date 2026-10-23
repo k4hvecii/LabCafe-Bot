@@ -1,0 +1,109 @@
+name: LabCafe Discord notifications
+on:
+  workflow_run:
+    workflows: [Windows + Linux verification]
+    types: [completed]
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: Exact verified main-branch commit SHA (40 hexadecimal characters)
+        required: true
+        type: string
+      summary:
+        description: Public-safe short development summary
+        required: true
+        type: string
+      confirmed:
+        description: I approve this important development announcement (not a release)
+        required: true
+        default: false
+        type: boolean
+
+permissions: {}
+
+jobs:
+  prepare:
+    if: github.repository == 'k4hvecii/LabCafe-Bot' && (github.event_name != 'workflow_run' || github.event.workflow_run.head_repository.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: read
+    outputs:
+      notify: ${{ steps.plan.outputs.notify }}
+      key: ${{ steps.plan.outputs.key }}
+      plan: ${{ steps.plan.outputs.plan }}
+    steps:
+      # Never check out a workflow_run head SHA, PR code or a release tag with secrets.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+      - id: plan
+        run: node scripts/release/notify.mjs plan
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  deliver:
+    needs: prepare
+    if: needs.prepare.outputs.notify == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: read
+    # A PR merge + approved manual announcement for the same SHA share a key.
+    concurrency:
+      group: labcafe-discord-${{ needs.prepare.outputs.key }}
+      cancel-in-progress: false
+    env:
+      PLAN_JSON: ${{ needs.prepare.outputs.plan }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+      - id: configured
+        run: node scripts/release/notify.mjs configured
+        env:
+          DISCORD_DEV_WEBHOOK_URL: ${{ secrets.DISCORD_DEV_WEBHOOK_URL }}
+          DISCORD_RELEASE_WEBHOOK_URL: ${{ secrets.DISCORD_RELEASE_WEBHOOK_URL }}
+      - id: existing
+        if: steps.configured.outputs.configured == 'true'
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: .notification-state
+          key: labcafe-discord-v1-${{ needs.prepare.outputs.key }}
+      - if: steps.configured.outputs.configured == 'true' && steps.existing.outputs.cache-hit != 'true'
+        run: node scripts/release/notify.mjs claim
+      # Persist a reservation BEFORE sending: uncertain POST delivery must not be retried.
+      - if: steps.configured.outputs.configured == 'true' && steps.existing.outputs.cache-hit != 'true'
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: .notification-state
+          key: labcafe-discord-v1-${{ needs.prepare.outputs.key }}
+      - if: steps.configured.outputs.configured == 'true' && steps.existing.outputs.cache-hit != 'true'
+        run: node scripts/release/notify.mjs clear-local
+      # Read back the persisted claim; a failed cache save must never permit a send.
+      - id: reserved
+        if: steps.configured.outputs.configured == 'true' && steps.existing.outputs.cache-hit != 'true'
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: .notification-state
+          key: labcafe-discord-v1-${{ needs.prepare.outputs.key }}
+      - if: steps.configured.outputs.configured == 'true' && steps.existing.outputs.cache-hit != 'true' && steps.reserved.outputs.cache-hit != 'true'
+        run: node -e "console.error('notification_reservation_unavailable');process.exit(1)"
+      - if: steps.configured.outputs.configured == 'true' && steps.existing.outputs.cache-hit != 'true' && steps.reserved.outputs.cache-hit == 'true'
+        run: node scripts/release/notify.mjs send
+        env:
+          DISCORD_DEV_WEBHOOK_URL: ${{ secrets.DISCORD_DEV_WEBHOOK_URL }}
+          DISCORD_RELEASE_WEBHOOK_URL: ${{ secrets.DISCORD_RELEASE_WEBHOOK_URL }}
