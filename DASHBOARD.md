@@ -9,3 +9,15 @@ OAuth uses identify and guilds scopes. The account must own or manage a server. 
 Optional owner access uses LABCAFE_OWNER_ID (user ID). Leave observer/control paths and tokens unset for the basic local setup. Never expose metrics ports publicly. Production requires HTTPS, a registered HTTPS callback, least-privilege permissions and environment-specific review of deployment templates. Trust proxy headers only behind a proxy you control.
 
 The original mascot, custom illustrations, founder block and reference assets are excluded from this private source candidate. `/logo.svg` is a neutral replacement. No production credentials, database or analytics data are distributed. No preview route or completed AI-analysis feature is claimed.
+
+
+## Concurrent settings changes
+
+The dashboard sends its last saved settings in `X-Settings-Base` for both saves
+and resets. SQLite compares that snapshot inside the write transaction. A stale
+snapshot returns HTTP 409 without changing settings or adding reset history; reload
+the server settings before confirming again. Malformed snapshots return HTTP 400.
+The header remains optional for older API clients, so these clients must opt in to
+receive concurrency protection. The three changed runtime files (dashboard app,
+server and settings store) require a coordinated, separately approved deployment.
+GitHub push/CI does not update an already running bot or dashboard.

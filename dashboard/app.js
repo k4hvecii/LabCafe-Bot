@@ -397,7 +397,7 @@ async function save(){
 async function reset(){
   if(state.saving)return;
   state.saving=true;document.querySelector('#confirm-reset').disabled=true;buttonBusy(document.querySelector('#confirm-reset'),true,'Kaydediliyor…');
-  try{const result=await api(`/api/guilds/${state.guild.id}/reset`,{method:'POST'});state.history=result.history||[];state.analysis=result.analysis||state.analysis;state.settings=result.settings;state.draft={...result.settings};document.querySelector('#reset-dialog').close();toast('Ayarlar sıfırlandı.');}
+  try{const result=await api(`/api/guilds/${state.guild.id}/reset`,{method:'POST',headers:{'X-Settings-Base':JSON.stringify(state.settings)}});state.history=result.history||[];state.analysis=result.analysis||state.analysis;state.settings=result.settings;state.draft={...result.settings};document.querySelector('#reset-dialog').close();toast('Ayarlar sıfırlandı.');}
   catch(error){toast(error.message,true);}finally{state.saving=false;document.querySelector('#confirm-reset').disabled=false;buttonBusy(document.querySelector('#confirm-reset'),false);renderContent();}
 }
 function marqueeGroup(items) {

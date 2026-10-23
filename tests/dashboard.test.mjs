@@ -498,3 +498,25 @@ test('installation flow ignores query guild hints, requires canonical grant and 
  assert.equal((await app.request('/auth/callback?code=test&state='+secondState,{headers:{Cookie:secondCookie}})).status,400);
  const disabled=await fixture(t,config,{observability:{rest,center}});assert.equal((await disabled.request('/auth/install')).status,404);
 });
+
+test('dashboard reset rejects stale expected settings without deleting newer values or history',async t=>{
+ const {request,login,store}=await fixture(t);const user=await login();
+ const baseline=store.get(guildId);
+ store.update(guildId,{locale:'en',ephemeralReplies:false},guildId);
+ const history=store.history(guildId).length;
+ const response=await request(`/api/guilds/${guildId}/reset`,{method:'POST',headers:{Cookie:user.cookie,Origin:config.origin,'X-CSRF-Token':user.csrf,'X-Settings-Base':JSON.stringify(baseline)}});
+ assert.equal(response.status,409);assert.equal(store.get(guildId).locale,'en');assert.equal(store.get(guildId).ephemeralReplies,false);assert.equal(store.history(guildId).length,history);
+});
+
+test('dashboard reset validates its snapshot and records only a matching confirmed reset',async t=>{
+ const {request,login,store}=await fixture(t);const user=await login();
+ store.update(guildId,{locale:'en'},guildId);
+ const headers={Cookie:user.cookie,Origin:config.origin,'X-CSRF-Token':user.csrf};
+ const before=store.history(guildId).length;
+ for(const snapshot of ['{','{}',JSON.stringify({locale:'invalid',ephemeralReplies:true,commandChannelId:null})]){
+  assert.equal((await request(`/api/guilds/${guildId}/reset`,{method:'POST',headers:{...headers,'X-Settings-Base':snapshot}})).status,400);
+ }
+ assert.equal(store.history(guildId).length,before);
+ const response=await request(`/api/guilds/${guildId}/reset`,{method:'POST',headers:{...headers,'X-Settings-Base':JSON.stringify(store.get(guildId))}});
+ assert.equal(response.status,200);assert.deepEqual(store.get(guildId),defaultSettings());assert.equal(store.history(guildId).length,before+1);assert.equal(store.history(guildId)[0].action,'reset');
+});

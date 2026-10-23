@@ -66,6 +66,16 @@ function parseSettings(value: unknown): GuildSettings {
   return { locale: 'locale' in value && value.locale === 'en' ? 'en':'tr', ephemeralReplies: value.ephemeralReplies, commandChannelId: value.commandChannelId };
 }
 
+// Optional for compatibility with existing API clients; the dashboard supplies its last read snapshot.
+function settingsBase(req: IncomingMessage): GuildSettings | undefined {
+  const value = req.headers['x-settings-base'];
+  if (value === undefined) return undefined;
+  try {
+    if (typeof value !== 'string') throw new Error('Invalid header');
+    return parseSettings(JSON.parse(value) as unknown);
+  } catch { throw new HttpError(400, 'Geçersiz ayar sürümü.'); }
+}
+
 export function analyze(guild: GuildDetails, settings: GuildSettings, commandCount: number, canSend: boolean | null) {
   const channelValid = !settings.commandChannelId || guild.channels.some(channel=>channel.id===settings.commandChannelId);
   const checks: {label:string;ok:boolean|null;detail:string;status?:'info'|'warning'}[] = [
@@ -412,16 +422,16 @@ export function createDashboardServer({ config, store, discord, commands, preloa
         || !await discord.canUseChannel(id, settings.commandChannelId))) {
         throw new HttpError(400, 'Botun görebildiği ve embed gönderebildiği bir metin kanalı seç.');
       }
-      let expected: GuildSettings | undefined;
-      if (req.headers['x-settings-base']) {
-        try { expected=parseSettings(JSON.parse(String(req.headers['x-settings-base'])) as unknown); } catch { throw new HttpError(400,'Geçersiz ayar sürümü.'); }
-      }
+      const expected = settingsBase(req);
       try { json(res, 200, { settings: store.update(id, settings, session.user.id, expected), history:store.history(id), analysis:analyze(guild,settings,commands.length,settings.commandChannelId?true:null) }); }
       catch (error) { if (error instanceof Error && error.message==='SETTINGS_CONFLICT') throw new HttpError(409,'Ayarlar başka bir yönetici tarafından değiştirildi. Güncel ayarları açıp tekrar dene.'); throw error; }
       return;
     }
     if (req.method === 'POST' && match?.[2] === '/reset') {
-      json(res, 200, { settings: store.reset(id, session.user.id), history:store.history(id), analysis:analyze(guild,store.get(id),commands.length,null) }); return;
+      const expected = settingsBase(req);
+      try { json(res, 200, { settings: store.reset(id, session.user.id, expected), history:store.history(id), analysis:analyze(guild,store.get(id),commands.length,null) }); }
+      catch (error) { if (error instanceof Error && error.message==='SETTINGS_CONFLICT') throw new HttpError(409,'Ayarlar başka bir yönetici tarafından değiştirildi. Güncel ayarları açıp tekrar dene.'); throw error; }
+      return;
     }
     throw new HttpError(405, 'Bu yöntem desteklenmiyor.');
   }
