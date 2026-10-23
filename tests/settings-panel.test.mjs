@@ -103,3 +103,23 @@ test('open and component acknowledgements precede slow REST requests',async()=>{
  const i=f.interaction('select',control(open.out.edit,'locale'),['en']);f.state.hold=new Promise(resolve=>release=resolve);const action=f.panel.handle(i,f.store);await Promise.resolve();assert.equal(i.out.deferred,true);release();await action;assert.equal(f.store.history(guild).length,0);
  }finally{f.store.close();}
 });
+
+
+test('production opt-in selects the same panel across normal registration scopes without weakening prototype isolation',async()=>{
+ const base={DISCORD_TOKEN:'offline-test-token',DISCORD_CLIENT_ID:bot,NODE_ENV:'production',LABCAFE_SETTINGS_PANEL_ENABLED:'true'};
+ const commands=await loadCommands();
+ for(const scope of [{},{DISCORD_GUILD_ID:guild},{DISCORD_REGISTER_JOINED_GUILDS:'true',DISCORD_GUILD_ID:guild}]){
+  const cfg=readConfig({...base,...scope});assert.equal(cfg.settingsPanelEnabled,true);assert.equal(cfg.settingsPanelPrototype,undefined);
+  const f=fixture();try{
+   const selected=settingsPanelCommands(commands,cfg,f.panel);const settings=selected.find(c=>c.data.name==='ayarlar');
+   assert.equal(settings.data.toJSON().options.length,0);assert.equal(settings.data.toJSON().default_member_permissions,'32');assert.equal(settings.data.toJSON().dm_permission,false);
+   for(const command of commands.filter(c=>c.data.name!=='ayarlar'))assert.equal(selected.find(c=>c.data.name===command.data.name),command);
+   await settings.run(f.interaction(),{settingsStore:f.store});assert.equal(f.store.history(guild).length,0);
+   const unauthorized=f.interaction();unauthorized.memberPermissions=new PermissionsBitField();await settings.run(unauthorized,{settingsStore:f.store});assert.match(unauthorized.out.edit.content,/yetkisi/);
+  }finally{f.store.close();}
+ }
+ assert.equal(settingsPanelCommands(commands,readConfig({...base,LABCAFE_SETTINGS_PANEL_ENABLED:'false'})),commands);
+ for(const invalid of ['1','TRUE','yes'])assert.throws(()=>readConfig({...base,LABCAFE_SETTINGS_PANEL_ENABLED:invalid}));
+ assert.throws(()=>readConfig({...base,LABCAFE_SETTINGS_PANEL_PROTOTYPE:'true'}),/not both/);
+ assert.throws(()=>settingsPanelCommands(commands,{...readConfig(base),settingsPanelPrototype:true}),/one settings panel mode/);
+});

@@ -1,9 +1,25 @@
-# Interactive settings prototype
+# Interactive settings panel
 
-This prototype is available only when explicitly enabled on a separate Discord test
-application and test server. It is not a production command migration. The normal
-`/ayarlar` definition still has its five existing subcommands. No other command is
-redesigned. English clients display `/settings` through Discord localization.
+The panel has two mutually exclusive opt-in modes. With both flags absent or false,
+`/ayarlar` retains its five legacy subcommands. No other command is redesigned.
+English clients display `/settings` through Discord localization.
+
+## Approved production migration
+
+Set `LABCAFE_SETTINGS_PANEL_ENABLED=true` and leave
+`LABCAFE_SETTINGS_PANEL_PROTOTYPE=false` only for an explicitly approved rollout.
+This selects the single `/ayarlar` panel for the existing normal, global or
+joined-guild command registration scopes. It does not expand those scopes.
+The next normal startup/registration synchronizes the new schema, removing the
+five subcommands from that scope. Back up SQLite and review registration targets
+before starting the approved deployment. No database migration is needed.
+
+Rollback: set `LABCAFE_SETTINGS_PANEL_ENABLED=false` and perform an approved
+normal command sync to restore the unchanged legacy definition. Existing ephemeral
+sessions expire after five minutes; process restarts invalidate them safely.
+The isolated prototype flag is not a production activation mechanism, and enabling
+both flags is rejected. Neither this code nor these instructions themselves perform
+a Discord registration or deployment.
 
 ## Isolated test setup
 
@@ -76,9 +92,8 @@ they do not replace live tests. On the separate test application/server:
 
 Live acceptance and a real Discord screenshot remain pending until the separate
 test application and server are available. Production rollout requires explicit
-maintainer approval after acceptance: update the production command selection to
-the new schema, review the intended guild/global registration diff, back up settings,
-and perform the approved sync. Do not delete production subcommands now. Rollback
+maintainer approval after acceptance: enable the production flag, review the intended guild/global registration diff, back up settings,
+and perform the approved sync. Do not synchronize production definitions without rollout approval. Rollback
 uses the unchanged legacy command definition and normal approved registration;
 no database schema migration or data deletion is needed.
 

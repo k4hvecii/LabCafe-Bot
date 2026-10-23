@@ -4,6 +4,7 @@ import { LEVELS, type Level } from '../core/logger.js';
 export interface BotConfig {
   registerJoinedGuilds?: boolean;
   settingsPanelPrototype?: boolean;
+  settingsPanelEnabled?: boolean;
   settingsPanelTestApplicationId?: string;
   token: string;
   clientId: string;
@@ -35,8 +36,11 @@ export function readConfig(env: NodeJS.ProcessEnv): BotConfig {
   const joined = env.DISCORD_REGISTER_JOINED_GUILDS?.trim();
   if (joined && !['true','false'].includes(joined)) throw new Error('DISCORD_REGISTER_JOINED_GUILDS true veya false olmalı.');
 
+  const enabled = env.LABCAFE_SETTINGS_PANEL_ENABLED?.trim();
+  if (enabled && !['true','false'].includes(enabled)) throw new Error('LABCAFE_SETTINGS_PANEL_ENABLED must be true or false.');
   const prototype = env.LABCAFE_SETTINGS_PANEL_PROTOTYPE?.trim();
   if (prototype && !['true','false'].includes(prototype)) throw new Error('LABCAFE_SETTINGS_PANEL_PROTOTYPE must be true or false.');
+  if (enabled === 'true' && prototype === 'true') throw new Error('Choose production settings panel or isolated prototype mode, not both.');
   const testApplication = env.LABCAFE_TEST_APPLICATION_ID?.trim();
   if (prototype === 'true' && (!['development','test'].includes(env.NODE_ENV ?? '') || !guildId || joined === 'true' || testApplication !== clientId)) {
     throw new Error('Settings prototype requires development/test mode, a dedicated test application ID, a test guild and joined-guild registration disabled.');
@@ -47,5 +51,5 @@ export function readConfig(env: NodeJS.ProcessEnv): BotConfig {
     throw new Error(`LOG_LEVEL: ${LEVELS.join(', ')} olmalı.`);
   }
 
-  return { token, clientId, guildId, logLevel: logLevel as BotConfig['logLevel'], ...(joined ? {registerJoinedGuilds:joined === 'true'} : {}), ...(prototype==='true'?{settingsPanelPrototype:true,settingsPanelTestApplicationId:testApplication!}:{}) };
+  return { token, clientId, guildId, logLevel: logLevel as BotConfig['logLevel'], ...(joined ? {registerJoinedGuilds:joined === 'true'} : {}), ...(enabled==='true'?{settingsPanelEnabled:true}:{}), ...(prototype==='true'?{settingsPanelPrototype:true,settingsPanelTestApplicationId:testApplication!}:{}) };
 }

@@ -48,7 +48,14 @@ function dashboardError(error,retry){
 }
 function coffeeLoader(label='Veriler alınıyor…',inline=false){
  const text=window.LabCafeLanguage?.text(label)||label;
- return `<span class="coffee-loader${inline?' coffee-loader-inline':''}" role="status" aria-label="${escape(text)}"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><g class="coffee-steam"><path d="M23 25c-7-6 7-8 0-16"/><path d="M32 23c-7-6 7-8 0-16"/><path d="M41 25c-7-6 7-8 0-16"/></g><path class="coffee-cup" d="M16 30h30v12a12 12 0 0 1-12 12h-6a12 12 0 0 1-12-12V30Z"/><path d="M46 33h3a7 7 0 0 1 0 14h-4M13 58h38"/></svg></span>`;
+ return `<span class="soft-loader${inline?' soft-loader-inline':''}" role="status" aria-label="${escape(text)}"><span class="soft-loader-visual" aria-hidden="true">${inline?'':'<img src="/logo.svg" alt="" width="38" height="43">'}<span class="soft-loader-track"></span></span></span>`;
+}
+function dashboardSkeleton(kind='overview'){
+ const label=window.LabCafeLanguage?.text('Sunucu yükleniyor…')||'Sunucu yükleniyor…';
+ const line='<span class="loading-placeholder loading-line"></span>';
+ if(kind==='guilds')return `<section class="dashboard-skeleton" role="status" aria-label="${escape(label)}"><div class="page-title" aria-hidden="true"><span class="loading-placeholder loading-title"></span></div><div class="guild-grid" aria-hidden="true">${Array.from({length:6},()=>'<div class="guild-card skeleton-guild"><span class="loading-placeholder loading-avatar"></span>'+line+'</div>').join('')}</div></section>`;
+ const cards=()=>`<div class="workspace-module-grid">${Array.from({length:2},()=>'<div class="workspace-module-card skeleton-module"><span class="loading-placeholder loading-square"></span><span class="loading-copy-lines">'+line+line+'</span></div>').join('')}</div>`;
+ return `<section class="dashboard-skeleton guild-workspace-layout" role="status" aria-label="${escape(label)}"><aside class="guild-sidebar skeleton-sidebar" aria-hidden="true"><span class="loading-placeholder loading-server"></span>${line.repeat(5)}</aside><div class="guild-workspace-body" aria-hidden="true"><div class="workspace-page"><div class="workspace-welcome"><span class="loading-placeholder loading-title"></span></div><div class="workspace-summary">${Array.from({length:3},()=>'<div>'+line+'<span class="loading-placeholder loading-value"></span></div>').join('')}</div>${Array.from({length:2},()=>'<section class="workspace-module-group">'+line+cards()+'</section>').join('')}</div></div></section>`;
 }
 const busyButtons=new WeakMap();
 function buttonBusy(button,busy,label='Veriler alınıyor…'){
@@ -289,7 +296,7 @@ async function selectGuild(id){
     document.querySelector('#back-guilds').addEventListener('click',showGuilds);return;
   }
   const navigation=++state.navigation;state.saveError=false;
-  document.querySelector('#content').innerHTML=coffeeLoader('Sunucu yükleniyor…');
+  document.querySelector('#content').innerHTML=dashboardSkeleton();
   try{
     window.labcafeTrack?.('analysis_started');
     const data=await api(`/api/guilds/${id}`);
@@ -452,7 +459,7 @@ async function init(){
     if(!session.authenticated){if(location.pathname!=='/'){location.replace('/auth/login');return;}const error=new URLSearchParams(location.search).get('error');landing(error==='login-cancelled'?'Discord girişi iptal edildi.':!config.loginConfigured?'Discord girişi henüz etkinleştirilmedi. Destek sunucusundan bize ulaşabilirsin.':'');return;}
     state.user=session.user;state.csrf=session.csrf;state.isOwner=session.isOwner===true;if(location.pathname==='/'){landing();return;}if(location.pathname==='/admin'){await showOwner();return;}shell();
     const requestedGuild=new URLSearchParams(location.search).get('guild');
-    document.querySelector('#content').innerHTML=coffeeLoader('Sunucular yükleniyor');state.guilds=(await api('/api/guilds')).guilds;showGuilds(false);void loadPublicGuilds();
+    document.querySelector('#content').innerHTML=dashboardSkeleton('guilds');state.guilds=(await api('/api/guilds')).guilds;showGuilds(false);void loadPublicGuilds();
     if(state.guilds.some(guild=>guild.id===requestedGuild))await selectGuild(requestedGuild);
   }catch(error){const key=location.pathname.split('/')[2];if(location.pathname.startsWith('/features/')&&featurePages[key]){featurePage(key);return;}if(location.pathname!=='/'){dashboardError(error,()=>location.reload());}else landing(error.message);}
 }
