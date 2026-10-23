@@ -2,7 +2,7 @@
 
 LabCafe is early-stage software without a declared stable supported release. Security fixes currently target the latest reviewed source; there is no guaranteed response SLA.
 
-Do not report vulnerabilities with tokens, personal data, production logs, or exploit details in public issues. Use GitHub private vulnerability reporting once the maintainer enables it. Until a verified private reporting channel is published, do not send sensitive material through an unverified address or public issue. A verified private channel is a release prerequisite. GitHub private vulnerability reporting is documented for public repositories; do not assume it is active while this repository is private. After an approved visibility change, enable and verify the reporting entry point before announcing the release.
+Report vulnerabilities privately using [GitHub Report a vulnerability](https://github.com/k4hvecii/LabCafe-Bot/security/advisories/new). Private vulnerability reporting is enabled for this public repository. A GitHub account is required to submit a report. Do not put tokens, personal data, production logs or exploit details in public issues. Maintainers must watch All Activity or Security alerts and enable repository notifications to receive private-report alerts. Email delivery also depends on their account notification settings.
 
 Use only your own isolated test environment. Include affected revision, impact, safe reproduction steps, and proposed mitigation. Never test production Discord servers without permission. If a credential is exposed, revoke/rotate it at the provider; deleting a file or adding gitignore is insufficient.
 

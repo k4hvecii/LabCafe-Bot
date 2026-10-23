@@ -1,6 +1,6 @@
 # LabCafe
 
-Discord server management bot and web dashboard, built with TypeScript, discord.js and Node.js. LabCafe is developed with assistance from ChatGPT and OpenAI Codex. Its primary maintainer directs product decisions, sets requirements and manages releases. Early development; preparing the first open-source release. Project-owned code is licensed under MIT. This repository remains Private pending separate publication approval.
+Discord server management bot and web dashboard, built with TypeScript, discord.js and Node.js. LabCafe is developed with assistance from ChatGPT and OpenAI Codex. Its primary maintainer directs product decisions, sets requirements and manages releases. Early-stage open-source development. Project-owned code is licensed under MIT. This clean source repository is public.
 
 ## Implemented
 
@@ -47,7 +47,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), and [LICENSE
 
 ## Publication history
 
-This repository starts with a new root commit from the reviewed clean source package. No earlier Git history was imported. The former repository is retained separately as a private archive. Keep this repository Private until separate publication approval is complete.
+This repository starts with a new root commit from the reviewed clean source package. No earlier Git history was imported. The former repository is retained separately as a private archive. Publication was explicitly approved by the maintainer; the private archive remains separate.
 
 ## License
 

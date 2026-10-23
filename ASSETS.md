@@ -1,6 +1,6 @@
 # Source and asset boundary
 
-Project-owned source, tests, documentation and generic deployment templates are licensed under the unmodified root MIT LICENSE. The repository remains Private pending separate publication approval. The legacy help renderer and related derived helpers have been removed from the current source tree and independently replaced. The former private history is stored separately and was not imported into this repository. The maintainer approved MIT with the notice Copyright (c) 2026 LabCafe.
+Project-owned source, tests, documentation and generic deployment templates are licensed under the unmodified root MIT LICENSE. The clean repository is public under the maintainer-approved publication scope. The legacy help renderer and related derived helpers have been removed from the current source tree and independently replaced. The former private history is stored separately and was not imported into this repository. The maintainer approved MIT with the notice Copyright (c) 2026 LabCafe.
 
 Original LabCafe mascot/logo, workshop artwork, founder avatar/block and imported reference folder are excluded and retained separately outside this repository. The name LabCafe and brand rights are not granted by the MIT code license. The logo.svg path now serves a neutral geometric placeholder, not the mascot.
 
