@@ -1,3 +1,5 @@
+import {SettingsPanel} from '../settings-panel/handler.js';
+import {settingsPanelCommands} from '../settings-panel/prototype.js';
 import { localizedInteraction } from '../i18n/interaction.js';
 import { accessAllows } from '../help/access-store.js';
 import { Client, Events, GatewayIntentBits, MessageFlags, PermissionFlagsBits } from 'discord.js';
@@ -23,6 +25,8 @@ const syncedClients = new WeakSet<Client>();
 export function isBotReady(client: Client): boolean { return client.isReady() && syncedClients.has(client); }
 
 export function createBot(level: Level, token: string, commands: BotCommand[], config: BotConfig, settingsStore: GuildSettingsStore, onFatal?: () => void, onGuildJoined?:()=>void, telemetry?:{rest:DiscordRestMetrics;startup:StartupTracker;runtime?:BotRuntime}): Client {
+  const settingsPanel=new SettingsPanel();
+  commands=settingsPanelCommands(commands,config,settingsPanel);
   const logger = createLogger(level, [token], {module:'Discord'});
   const metrics=telemetry?.rest??new DiscordRestMetrics('bot');
   const commandMap = new Map(commands.map(command => [command.data.name, command]));
@@ -105,6 +109,19 @@ export function createBot(level: Level, token: string, commands: BotCommand[], c
 
   client.on(Events.InteractionCreate, async rawInteraction => {
     const interaction=localizedInteraction(rawInteraction,settingsStore);
+    try {
+      if ((rawInteraction.isButton?.() || rawInteraction.isStringSelectMenu?.() || rawInteraction.isChannelSelectMenu?.())
+        && await settingsPanel.handle(rawInteraction,settingsStore)) return;
+    } catch (error) {
+      logger.error('Ayar paneli etkileşimi tamamlanamadı',{error:safeErrorName(error)});
+      // Never send a second acknowledgement or expose API error details.
+      try {
+        if (rawInteraction.isRepliable() && !rawInteraction.replied && !rawInteraction.deferred)
+          await rawInteraction.reply({content:'Ayar paneli açılamadı. /ayarlar ile tekrar dene.',flags:MessageFlags.Ephemeral});
+      } catch { /* An expired interaction cannot receive another response. */ }
+      return;
+    }
+
     try {
       if ((interaction.isAutocomplete?.() || interaction.isButton?.() || interaction.isStringSelectMenu?.() || interaction.isModalSubmit?.())
         && await handleHelp(interaction, commands, settingsStore)) return;
