@@ -7,3 +7,4 @@ Do not report vulnerabilities with tokens, personal data, production logs, or ex
 Use only your own isolated test environment. Include affected revision, impact, safe reproduction steps, and proposed mitigation. Never test production Discord servers without permission. If a credential is exposed, revoke/rotate it at the provider; deleting a file or adding gitignore is insufficient.
 
 Keep secrets in local environment files, use least privilege, keep exporters on loopback, set the owner Discord user ID explicitly, protect backups and SQLite files, and configure HTTPS and trusted proxy headers carefully. Administrator permission is not required for basic operation. Deployment examples are templates, not production secrets or a universal hardening guarantee.
+
